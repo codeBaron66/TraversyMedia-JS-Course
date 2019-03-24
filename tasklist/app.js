@@ -1,24 +1,16 @@
-//define UI vars
 const form = document.querySelector('#task-form');
 const taskList = document.querySelector('.collection');
 const clearBtn = document.querySelector('.clear-tasks');
 const filter = document.querySelector('#filter');
 const taskInput = document.querySelector('#task');
 
-// load all event listeners
 loadEventListeners();
 
-// Load all event listeners
 function loadEventListeners() {
-  //DOM load event
   document.addEventListener('DOMContentLoaded', getTasks);
-  // add task events
   form.addEventListener('submit', addTask);
-  //delete task event
   taskList.addEventListener('click', removeTask);
-  // clear task event
   clearBtn.addEventListener('click', clearTasks);
-  // filter task events
   filter.addEventListener('keyup', filterTasks)
 }
 
@@ -52,7 +44,6 @@ function getTasks() {
   });
 }
 
-// add task
 function addTask(e) {
   if(taskInput.value === ''){
     alert('Add a Task!');
@@ -85,7 +76,6 @@ function addTask(e) {
   e.preventDefault();
 }
 
-// Store task
 function storeTaskToLocalStorage(task) {
   let tasks;
   if(localStorage.getItem('tasks') === null){
@@ -99,8 +89,6 @@ function storeTaskToLocalStorage(task) {
   localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
-
-// remove task
 function removeTask(e) {
   if(e.target.parentElement.classList.contains('delete-item')) {
     if(confirm('Are you sure?')) {
@@ -112,7 +100,6 @@ function removeTask(e) {
   }
 }
 
-// remove from LS
 function removeTaskFromLocalStorage(taskItem) {
   let tasks;
   if(localStorage.getItem('tasks') === null){
@@ -130,7 +117,6 @@ function removeTaskFromLocalStorage(taskItem) {
   localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
-// clear task list
 function clearTasks(e) {
   // taskList.innerHTML = '';
 
@@ -139,16 +125,13 @@ function clearTasks(e) {
     taskList.removeChild(taskList.firstChild);
   }
 
-  // clear tasks from local storage
   clearTasksFromLocalStorage();
 }
 
-// clear tasks from lS
 function clearTasksFromLocalStorage() {
   localStorage.clear();
 }
 
-// filter tasks
 function filterTasks(e) {
   const text = e.target.value.toLowerCase();
   
