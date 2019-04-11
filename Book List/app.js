@@ -62,12 +62,9 @@ document.getElementById('book-form').addEventListener('submit', function (e){
 
 document.getElementById('book-list').addEventListener('click', function(e){
   const ui = new UI();
-  console.log(ui);
   if (e.target.className === 'delete') {
     ui.deleteBook(e.target);
     ui.alertMessage('Book removed', 'success');
+    e.preventDefault();
   }
-  console.log(e.target);
-  
-  e.preventDefault();
 });
