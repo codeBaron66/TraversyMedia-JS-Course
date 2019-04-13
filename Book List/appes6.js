@@ -48,7 +48,6 @@ class Store {
       books = [];
     } else {
       books = JSON.parse(localStorage.getItem('books'));
-      // console.log(books);
     }
     return books;
   }
@@ -63,8 +62,6 @@ class Store {
 
   static addBook(book) {
     const books = Store.getBooks();
-    // console.log(books);
-    
     books.push(book);
     localStorage.setItem('books', JSON.stringify(books));
   }
@@ -77,11 +74,10 @@ class Store {
         books.splice(index, 1);
       }
     });
-    
+
     localStorage.setItem('books', JSON.stringify(books));
   }
 }
-
 
 document.addEventListener('DOMContentLoaded', Store.displayBooks);
 
