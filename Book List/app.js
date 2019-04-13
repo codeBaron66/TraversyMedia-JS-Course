@@ -44,6 +44,36 @@ UI.prototype.clearFields = function(){
   isbn = document.getElementById('isbn').value = '';
 }
 
+UI.prototype.addLocal = function(book) {
+  const books = JSON.parse(localStorage.getItem('books')) || [];
+  books.push(book);
+  localStorage.setItem('books', JSON.stringify(books));
+}
+
+UI.prototype.delLocal = function(isbn) {
+  const books = JSON.parse(localStorage.getItem('books')) || [];
+  books.forEach(function(book, index) {
+    if (book.isbn === isbn) {
+      books.splice(index, 1);
+      console.log(books);
+      localStorage.setItem('books', JSON.stringify(books));
+    }
+  });
+  
+}
+
+class Store {
+  static loadLocal() {
+    const books = JSON.parse(localStorage.getItem('books')) || [];
+    const ui = new UI();
+    books.forEach(function(book){
+      ui.addBookToList(book);
+    });
+  }
+}
+
+document.addEventListener('DOMContentLoaded', Store.loadLocal);
+
 document.getElementById('book-form').addEventListener('submit', function (e){
   const title = document.getElementById('title').value;
   author = document.getElementById('author').value;
@@ -54,6 +84,7 @@ document.getElementById('book-form').addEventListener('submit', function (e){
     ui.alertMessage('Please fill in all fields!', 'error');
   } else {
     ui.addBookToList(book);
+    ui.addLocal(book);
     ui.alertMessage('Book added to list!', 'success');
     ui.clearFields();
   }
@@ -64,6 +95,7 @@ document.getElementById('book-list').addEventListener('click', function(e){
   const ui = new UI();
   if (e.target.className === 'delete') {
     ui.deleteBook(e.target);
+    ui.delLocal(e.target.parentElement.previousElementSibling.textContent);
     ui.alertMessage('Book removed', 'success');
     e.preventDefault();
   }
